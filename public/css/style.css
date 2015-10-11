@@ -1,0 +1,30 @@
+* {
+  font-family: 'Roboto', 'Noto Sans', sans-serif;
+}
+
+#board {
+  width: 700px;
+  height: 700px;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+
+.square {
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  line-height: 50px;
+  font-size: 30px;
+  box-sizing: border-box;
+  font-weight: bold;
+}
+
+.square:hover {
+  background-color: salmon;
+  cursor: default;
+}
+
+#content {
+  text-align: center;
+}
