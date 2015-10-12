@@ -96,13 +96,150 @@ Game.prototype.renderBoard = function() {
   }
 }
 
-Player.prototype.rederRack = function() {
+//Render a player's rack in the DOM
+Player.prototype.renderRack = function() {
   var domRack = $('#rack');
   for(var i = 0; i < 7; i++) {
-
+    domRack.append('<div class="square rack-' + i + '">' + this.rack[i] + '</div>');
   }
 }
 
+var selectSquare = function(e) {
+  $(e.target).toggleClass('selected');
+}
+
+//Returns the number of directions for which the move provides a solution
+//Max would be all 4 directions
+var evaluatePlacement = function() {
+  var rackSelection = parseInt($('#rack .selected').text());
+  var boardSelection = $('#board .selected').text();
+  console.log(rackSelection);
+  console.log(boardSelection);
+  var boardX = $('#board .selected').attr('row');
+  var boardY = $('#board .selected').attr('col');
+
+  //Two squares above the selection
+  var up1 = $('.square[row="' + (boardX - 1) + '"][col="' + boardY + '"]').text();
+  var up2 = $('.square[row="' + (boardX - 2) + '"][col="' + boardY + '"]').text();
+
+  //Two squares below
+  var down1 = $('.square[row="' + (boardX + 1) + '"][col="' + boardY + '"]').text();
+  var down2 = $('.square[row="' + (boardX + 2) + '"][col="' + boardY + '"]').text();
+
+  //Two squares left
+  var left1 = parseInt($('.square[row="' + boardX + '"][col="' + (boardY - 1) + '"]').text());
+  var left2 = parseInt($('.square[row="' + boardX + '"][col="' + (boardY - 2) + '"]').text());
+
+  //Two squares right
+  var right1 = $('.square[row="' + boardX + '"][col="' + (boardY + 1) + '"]').text();
+  var right2 = $('.square[row="' + boardX + '"][col="' + (boardY + 2) + '"]').text();
+
+  console.log(left1, left2);
+
+  //Evaluate based on the symbol on the square
+  var numSolutions = 0;
+  switch(boardSelection) {
+    case '+':
+      console.log('in the plus case');
+      if(checkAdd(up1, up2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkAdd(down1, down2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkAdd(left1, left2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkAdd(right1, left2, rackSelection)) {
+        numSolutions++;
+      }
+      return numSolutions;
+    case '-':
+      if(checkSubtract(up1, up2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkSubtract(down1, down2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkSubtract(left1, left2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkSubtract(right1, left2, rackSelection)) {
+        numSolutions++;
+      }
+      return numSolutions;
+    case 'x':
+      if(checkMultiply(up1, up2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkMultiply(down1, down2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkMultiply(left1, left2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkMultiply(right1, left2, rackSelection)) {
+        numSolutions++;
+      }
+      return numSolutions;
+    case '&divide':
+      if(checkDivide(up1, up2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkDivide(down1, down2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkDivide(left1, left2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkDivide(right1, left2, rackSelection)) {
+        numSolutions++;
+      }
+      return numSolutions;
+    default:
+      console.log('default case');
+      if(checkAll(up1, up2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkAll(down1, down2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkAll(left1, left2, rackSelection)) {
+        numSolutions++;
+      }
+      if(checkAll(right1, left2, rackSelection)) {
+        numSolutions++;
+      }
+      return numSolutions;
+  }
+}
+
+//Functions for checking valid moves
+var checkAdd = function(a, b, c) {
+  return a + b === c;
+};
+
+var checkSubtract = function(a, b, c) {
+  return a - b === c || b - a === c;
+};
+
+var checkMultiply = function(a, b, c) {
+  return a * b === c;
+};
+
+var checkDivide = function(a, b, c) {
+  return a / b === c || b / a === c;
+};
+
+var checkAll = function(a, b, c) {
+  return checkAdd(a, b, c) || checkSubtract(a, b, c) || checkMultiply(a, b, c) || checkDivide(a, b, c);
+}
+
+$('#rack, #board').on('click', 'div', selectSquare);
+
+
 var game = new Game();
 game.renderBoard();
-var testRack = [7, 3, 12, 4, 6, 8, 2]
+var player = new Player();
+player.rack = [7, 3, 12, 4, 6, 8, 2]
+player.renderRack();

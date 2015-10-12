@@ -25,6 +25,14 @@
   cursor: default;
 }
 
+#rack {
+  margin-top: 20px;
+}
+
+.selected {
+  background-color: skyblue;
+}
+
 #content {
   text-align: center;
 }
