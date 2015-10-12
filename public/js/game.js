@@ -75,11 +75,51 @@ var Game = function() {
 
   //Empty player array to start
   this.players = [];
+
+  //Create the pool of tiles for players to use
+  this.pool = new TilePool;
+}
+
+var TilePool = function() {
+  this.tiles = [];
+  for(var i = 1; i <= 10; i++) {
+    for(var j = 0; j < 7; j++) {
+      this.tiles.push(i);
+    }
+  }
+  for(var i = 11; i <= 20; i++) {
+    this.tiles.push(i);
+  }
+  this.tiles.push(0, 21, 24, 25, 27, 28, 30, 32, 35, 36,
+    40, 42, 45, 48, 49, 50, 54, 56, 60, 63, 64, 70, 72, 80, 81, 90);
+}
+
+
+//Shuffle the tiles using the Fisher-Yates method
+//Implementation from user CoolAJ86 on Stack Overflow
+TilePool.prototype.shuffle = function() {
+  var current = this.tiles.length;
+  var temp;
+  var rand;
+
+  while(current !== 0) {
+    rand = Math.floor(Math.random() * current);
+    current -= 1;
+    temp = this.tiles[current];
+    this.tiles[current] = this.tiles[rand];
+    this.tiles[rand] = temp;
+  }
 }
 
 var Player = function(name) {
   this.name = name;
   this.rack = [];
+}
+
+Player.prototype.draw = function() {
+  if(this.rack.length < 7) {
+
+  }
 }
 
 //Render the game board in the DOM
@@ -212,6 +252,12 @@ var evaluatePlacement = function() {
       }
       return numSolutions;
   }
+}
+
+Game.prototype.commitMove = function() {
+  var validMove = evaluatePlacement();
+  if (validMove === 0) { return false };
+  $('#board .selected').text($('#rack .selected').text());
 }
 
 //Functions for checking valid moves
