@@ -2,6 +2,20 @@
   font-family: 'Roboto', 'Noto Sans', sans-serif;
 }
 
+body {
+  background-color: #9C27B0;
+}
+
+h1, h3, label, table {
+  color: #FFFFFF;
+}
+
+h1 {
+  font-size: 4em;
+  letter-spacing: 0.75em;
+  font-weight: 900;
+}
+
 #board {
   width: 700px;
   height: 700px;
@@ -41,7 +55,7 @@
 }
 
 .selected {
-  background-color: skyblue;
+  background-color: #673AB7;
 }
 
 #content {
@@ -53,7 +67,23 @@
 }
 
 button {
-  font-size: 1.25em;
+  font-size: 1.5em;
+  font-weight: 900;
+  background-color: #FFEB3B;
+  border: none;
+}
+
+input[type="text"] {
+  border: none;
+  border-bottom: 2px solid #FFFFFF;
+  font-size: 1.5em;
+  background-color: inherit;
+  outline: none;
+}
+
+label {
+  font-size: 1.5em;
+  font-weight: 900;
 }
 
 table {
@@ -61,7 +91,7 @@ table {
 }
 
 .active {
-  background-color: skyblue;
+  background-color: #607D8B;
 }
 
 .tile {
@@ -74,12 +104,12 @@ table {
   color: #BBDEFB;
 }
 
-.square.2x {
-  background-color: #4CAF50;
+.times-two {
+  background-color: #4CAF50 !important;
   color: #C8E6C9;
 }
 
-.square.3x {
+.times-three {
   background-color: #F44336;
   color: #FFCDD2;
 }
