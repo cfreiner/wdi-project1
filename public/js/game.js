@@ -176,19 +176,25 @@ Player.prototype.renderRack = function() {
   }
 }
 
+//Render the player's info to the DOM
+Player.prototype.renderScore = function() {
+  $('#active-player').text(this.name);
+  $('#score').text(this.score);
+}
+
 var selectedSquare = null;
 
 //Function for the click listener for squares
-var selectSquare = function(e) {
-  if(!selectedSquare) {
-    selectedSquare = $(e.target);
-    selectedSquare.toggleClass('selected');
-  } else {
-    selectedSquare.toggleClass('selected');
-    selectedSquare = $(e.target);
-    selectedSquare.toggleClass('selected');
-  }
-}
+// var selectSquare = function(e) {
+//   if(!selectedSquare) {
+//     selectedSquare = $(e.target);
+//     selectedSquare.toggleClass('selected');
+//   } else {
+//     selectedSquare.toggleClass('selected');
+//     selectedSquare = $(e.target);
+//     selectedSquare.toggleClass('selected');
+//   }
+// }
 
 //Returns a function for use in the click listener
 //Param should be "#board" or "#rack"
@@ -324,6 +330,7 @@ Game.prototype.commitMove = function() {
   this.players[this.activePlayerIndex].removeTileFromRack(rackTile);
   this.board[boardSpace.attr('row')][boardSpace.attr('col')] = rackTile;
   this.renderBoard();
+  this.players[this.activePlayerIndex].renderScore();
   if(this.determineEndOfTurn(this.players[this.activePlayerIndex])) {
     $('#buttons button').toggleClass('hide');
     alert('end of turn');
@@ -445,6 +452,7 @@ Game.prototype.determineEndOfTurn = function(player) {
   }
 }
 
+//Event listeners
 // $('#rack, #board').on('click', 'div', selectSquare);
 $('#board').on('click', 'div', selection('#board'));
 $('#rack').on('click', 'div', selection('#rack'));
@@ -454,10 +462,25 @@ $('#move-btn').on('click', function() {
 $('#turn-btn').on('click', function() {
   game.nextTurn();
 });
+$('#add-player').on('click', function(e) {
+  e.preventDefault();
+  players.push(new Player($('#player-name').val()));
+  if(players.length >= 2) {
+    $('#start').show();
+  }
+});
+$('#start').on('click', function(e) {
+  e.preventDefault();
+  game = new Game();
+  game.players = players;
+  game.renderBoard();
+});
 
-var game = new Game();
-game.renderBoard();
-var player = new Player();
-player.rack = [7, 3, 12, 4, 6, 8, 2];
-player.renderRack();
-game.addPlayer(player);
+$('#start').hide();
+var players = [];
+// var game = new Game();
+// game.renderBoard();
+// var player = new Player();
+// player.rack = [7, 3, 12, 4, 6, 8, 2];
+// player.renderRack();
+// game.addPlayer(player);

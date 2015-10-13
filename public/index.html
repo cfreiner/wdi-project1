@@ -11,6 +11,12 @@
       <header>
         <h1>Mixmath</h1>
       </header>
+      <form>
+        <label for="player-name">Name: </label>
+        <input id="player-name" type="text">
+        <button id="add-player">Add Player</button>
+        <button id="start">Start Game</button>
+      </form>
       <div id="board"></div>
       <div>
         <h3 id="player-name"></h3>
@@ -27,6 +33,10 @@
       <div id="buttons">
         <button id="move-btn">Submit Move</button>
         <button id="turn-btn" class="hide">End Turn</button>
+      </div>
+      <div id="player">
+        <h3><span id="active-player"></span>'s turn</h3>
+        <h3>Score: <span id="score"></span></h3>
       </div>
     </div>
     <script src="lib/lodash.min.js"></script>
