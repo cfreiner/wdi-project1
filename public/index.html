@@ -4,6 +4,7 @@
     <title>Mixmath</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
@@ -11,7 +12,7 @@
       <header>
         <h1>Mixmath</h1>
       </header>
-      <form>
+      <form class="start-form">
         <label for="player-name">Name: </label>
         <input id="player-name" type="text">
         <button id="add-player">Add Player</button>
@@ -32,7 +33,7 @@
       </div>
       <div id="buttons">
         <button id="move-btn">Submit Move</button>
-        <button id="turn-btn" class="hide">End Turn</button>
+        <button id="turn-btn">End Turn</button>
       </div>
       <div id="player">
         <h3><span id="active-player"></span>'s turn</h3>

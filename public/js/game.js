@@ -236,24 +236,31 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
 //Make the move based on which tiles/squares are selected
 Game.prototype.commitMove = function() {
   var boardSpace = $('#board .selected');
+  var boardText = boardSpace.text();
   var rackTile = parseInt($('#rack .selected').text());
+  var currentPlayer = this.players[this.activePlayerIndex];
   //Make sure the move is valid, storing it in a var for scoring purposes
   var validMove = evaluatePlacement(rackTile, boardSpace);
   if (validMove === 0) { alert('Invalid move'); return false; };
 
   //Make the move in the board array, then re-render the board to reflect the move
-  this.players[this.activePlayerIndex].removeTileFromRack(rackTile);
+  currentPlayer.removeTileFromRack(rackTile);
   this.board[boardSpace.attr('row')][boardSpace.attr('col')] = rackTile;
   this.renderBoard();
 
   //Determine the move's score and increment the player's score by that number
-  var moveScore = this.determineScore(rackTile, boardSpace.text(), validMove);
-  this.players[this.activePlayerIndex].incrementScore(moveScore)
-  this.players[this.activePlayerIndex].renderScore();
+  var moveScore = this.determineScore(rackTile, boardText, validMove);
+  currentPlayer.incrementScore(moveScore);
+  currentPlayer.renderScore();
+
+  //If the player successfully played on an operation sign, they draw a free tile
+  if(boardText === '+' || boardText === '-' || boardText === 'x' || boardText === '&divide') {
+    currentPlayer.draw(this.pool, 1);
+  }
 
   //Check if the player's turn should be over. If it is, hide the move button and show the end turn button.
-  if(this.determineEndOfTurn(this.players[this.activePlayerIndex])) {
-    $('#buttons button').toggleClass('hide');
+  if(this.determineEndOfTurn(currentPlayer)) {
+    // $('#move-btn').toggleClass('hide');
     alert('end of turn');
   }
 };
@@ -279,7 +286,7 @@ Game.prototype.nextTurn = function() {
   }
   this.players[this.activePlayerIndex].draw(this.pool);
   this.players[this.activePlayerIndex].renderScore();
-  $('#buttons button').toggleClass('hide');
+  // $('#move-btn').toggleClass('hide');
 }
 
 //Add a player to the game
@@ -315,6 +322,17 @@ Game.prototype.determineEndOfTurn = function(player) {
   }
 }
 
+Game.prototype.determineEndOfGame = function() {
+  if(this.pool.length === 0) {
+    this.players.forEach(function(player) {
+      if(!this.determineEndOfTurn(player)) {
+        return false;
+      }
+    });
+    return true;
+  }
+}
+
 //Event listeners
 // $('#rack, #board').on('click', 'div', selectSquare);
 $('#board').on('click', 'div', selection('#board'));
@@ -336,6 +354,7 @@ $('#start').on('click', function(e) {
   e.preventDefault();
   game = new Game();
   game.players = players;
+  $('.start-form').hide();
   game.renderBoard();
   game.players[game.activePlayerIndex].draw(game.pool);
   game.players[game.activePlayerIndex].renderScore();
