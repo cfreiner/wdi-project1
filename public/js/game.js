@@ -82,43 +82,6 @@ var Game = function() {
   this.pool = new TilePool();
 }
 
-//Tile pool constructor
-var TilePool = function() {
-  this.tiles = [];
-  for(var i = 1; i <= 10; i++) {
-    for(var j = 0; j < 7; j++) {
-      this.tiles.push(i);
-    }
-  }
-  for(var i = 11; i <= 20; i++) {
-    this.tiles.push(i);
-  }
-  this.tiles.push(0, 21, 24, 25, 27, 28, 30, 32, 35, 36,
-    40, 42, 45, 48, 49, 50, 54, 56, 60, 63, 64, 70, 72, 80, 81, 90);
-}
-
-
-//Shuffle the tiles using the Fisher-Yates method
-//JavaScript implementation from user CoolAJ86 on Stack Overflow
-TilePool.prototype.shuffle = function() {
-  var current = this.tiles.length;
-  var temp;
-  var rand;
-
-  while(current !== 0) {
-    rand = Math.floor(Math.random() * current);
-    current -= 1;
-    temp = this.tiles[current];
-    this.tiles[current] = this.tiles[rand];
-    this.tiles[rand] = temp;
-  }
-}
-
-//Return a tile from the end of the array
-TilePool.prototype.giveTile = function() {
-  return this.tiles.pop();
-}
-
 //Render the game board in the DOM
 Game.prototype.renderBoard = function() {
   var domBoard = $('#board');
@@ -282,99 +245,46 @@ Game.prototype.commitMove = function() {
   this.players[this.activePlayerIndex].removeTileFromRack(rackTile);
   this.board[boardSpace.attr('row')][boardSpace.attr('col')] = rackTile;
   this.renderBoard();
+
+  //Determine the move's score and increment the player's score by that number
+  var moveScore = this.determineScore(rackTile, boardSpace.text(), validMove);
+  this.players[this.activePlayerIndex].incrementScore(moveScore)
   this.players[this.activePlayerIndex].renderScore();
+
+  //Check if the player's turn should be over. If it is, hide the move button and show the end turn button.
   if(this.determineEndOfTurn(this.players[this.activePlayerIndex])) {
     $('#buttons button').toggleClass('hide');
     alert('end of turn');
   }
 };
 
+//Determine the score of a move
+//Based on the tile value, the square marking, and the number of equations the tile solves
+Game.prototype.determineScore = function(tileValue, squareValue, numSolutions) {
+  var score = tileValue * numSolutions;
+  if(squareValue === '2x') {
+    score *= 2;
+  } else if(squareValue === '3x') {
+    score *= 3;
+  }
+  return score;
+}
+
 //Switch the turn to the next player
 Game.prototype.nextTurn = function() {
   if(this.activePlayerIndex === this.players.length - 1) {
     this.activePlayerIndex = 0;
   } else {
-    activePlayerIndex++;
+    this.activePlayerIndex++;
   }
-  this.players[activePlayerIndex].draw();
-  this.players[activePlayerIndex].renderScore();
+  this.players[this.activePlayerIndex].draw(this.pool);
+  this.players[this.activePlayerIndex].renderScore();
   $('#buttons button').toggleClass('hide');
 }
 
 //Add a player to the game
 Game.prototype.addPlayer = function(player) {
   this.players.push(player);
-}
-
-//Functions for checking valid moves
-var checkAdd = function(a, b, c) {
-  return a + b === c;
-};
-
-var checkSubtract = function(a, b, c) {
-  return a - b === c || b - a === c;
-};
-
-var checkMultiply = function(a, b, c) {
-  return a * b === c;
-};
-
-var checkDivide = function(a, b, c) {
-  return a / b === c || b / a === c;
-};
-
-var checkAll = function(a, b, c) {
-  // console.log('a:',a,'b:',b,'c',c)
-  return checkAdd(a, b, c) || checkSubtract(a, b, c) || checkMultiply(a, b, c) || checkDivide(a, b, c);
-}
-
-//Returns an array of indexes of numbers in the input array
-//For use with the 14x14 game board array
-var locateNumbersInArray = function(arr) {
-  var numIndexArray = [];
-  for(var i = 0; i < 14; i++) {
-    for(var j = 0; j < 14; j++) {
-      if(arr[i][j] !== '3x' && arr[i][j] !== '2x' && parseInt(arr[i][j])) {
-        numIndexArray.push([i,j]);
-      }
-    }
-  }
-  console.log(numIndexArray);
-  return numIndexArray;
-}
-
-//Find empty squares with adjacent numbered squares
-var getAdjacentEmptySquares = function(arr) {
-  var numbers = locateNumbersInArray(arr);
-  var emptySquares = [];
-  numbers.forEach(function(item) {
-    var x = item[0];
-    var y = item[1];
-    if(!arr[x+1][y] && !findArrayInArray(emptySquares, [x+1, y])) {
-      emptySquares.push([x+1, y]);
-    }
-    if(!arr[x-1][y] && !findArrayInArray(emptySquares, [x-1, y])) {
-      emptySquares.push([x-1, y]);
-    }
-    if(!arr[x][y+1] && !findArrayInArray(emptySquares, [x, y+1])) {
-      emptySquares.push([x, y+1]);
-    }
-    if(!arr[x][y-1] && !findArrayInArray(emptySquares, [x, y-1])) {
-      emptySquares.push([x, y-1]);
-    }
-  });
-  console.log(emptySquares);
-  return emptySquares;
-}
-
-//Find an array in an array using Lodash deep equals
-var findArrayInArray = function(arr1, arr2) {
-  for(var i = 0; i < arr1.length; i++) {
-    if(_.isEqual(arr1[i], arr2)) {
-      return true;
-    }
-  }
-  return false;
 }
 
 //Get an array of possible moves for a player
@@ -427,6 +337,7 @@ $('#start').on('click', function(e) {
   game = new Game();
   game.players = players;
   game.renderBoard();
+  game.players[game.activePlayerIndex].draw(game.pool);
   game.players[game.activePlayerIndex].renderScore();
 });
 
