@@ -16,7 +16,6 @@ var checkDivide = function(a, b, c) {
 };
 
 var checkAll = function(a, b, c) {
-  // console.log('a:',a,'b:',b,'c',c)
   return checkAdd(a, b, c) || checkSubtract(a, b, c) || checkMultiply(a, b, c) || checkDivide(a, b, c);
 }
 
@@ -41,13 +40,11 @@ var locateNumbersInArray = function(arr) {
       }
     }
   }
-  console.log(numIndexArray);
   return numIndexArray;
 }
 
 //Check if a square is open to place a tile
 var checkOpenSquare = function(value) {
-  console.log(value);
   if(value === null ||
     value === '2x' ||
     value === '3x' ||
@@ -81,6 +78,5 @@ var getAdjacentEmptySquares = function(arr) {
       emptySquares.push([x, y-1]);
     }
   });
-  console.log(emptySquares);
   return emptySquares;
 }

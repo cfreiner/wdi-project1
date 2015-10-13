@@ -80,6 +80,9 @@ var Game = function() {
 
   //Create the pool of tiles for players to use
   this.pool = new TilePool();
+
+  //Counter used to determine the end of the game
+  this.passCount = 0;
 }
 
 //Render the game board in the DOM
@@ -93,6 +96,21 @@ Game.prototype.renderBoard = function() {
       } else {
         domBoard.append('<div class="square" row="' + i + '" col="' + j + '">&nbsp</div>');
       }
+    }
+  }
+}
+
+//Render the list of players to the DOM
+Game.prototype.renderPlayers = function() {
+  var list = $('#player-list');
+  list.children().remove();
+  var current = null;
+  for(var i = 0; i < this.players.length; i++) {
+    current = this.players[i];
+    if(i === this.activePlayerIndex) {
+      list.append('<tr class="active"><td>' + current.name + '</td><td>' + current.score + '</tr>');
+    } else {
+      list.append('<tr><td>' + current.name + '</td><td>' + current.score + '</tr>');
     }
   }
 }
@@ -135,28 +153,23 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
   //Two squares above the selection
   var up1 = parseInt($('.square[row="' + (boardX - 1) + '"][col="' + boardY + '"]').text());
   var up2 = parseInt($('.square[row="' + (boardX - 2) + '"][col="' + boardY + '"]').text());
-  // console.log('up',up1, up2);
 
   //Two squares below
   var down1 = parseInt($('.square[row="' + (boardX + 1) + '"][col="' + boardY + '"]').text());
   var down2 = parseInt($('.square[row="' + (boardX + 2) + '"][col="' + boardY + '"]').text());
-  // console.log('down',down1, down2);
 
   //Two squares left
   var left1 = parseInt($('.square[row="' + boardX + '"][col="' + (boardY - 1) + '"]').text());
   var left2 = parseInt($('.square[row="' + boardX + '"][col="' + (boardY - 2) + '"]').text());
-  // console.log('left',left1, left2);
 
   //Two squares right
   var right1 = parseInt($('.square[row="' + boardX + '"][col="' + (boardY + 1) + '"]').text());
   var right2 = parseInt($('.square[row="' + boardX + '"][col="' + (boardY + 2) + '"]').text());
-  // console.log('right',right1, right2);
 
   //Evaluate based on the symbol on the square
   var numSolutions = 0;
   switch(boardSelection.text()) {
     case '+':
-      // console.log('in the plus case');
       if(checkAdd(up1, up2, rackSelection)) {
         numSolutions++;
       }
@@ -171,7 +184,6 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
       }
       return numSolutions;
     case '-':
-      // console.log('in the minus case');
       if(checkSubtract(up1, up2, rackSelection)) {
         numSolutions++;
       }
@@ -186,7 +198,6 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
       }
       return numSolutions;
     case 'x':
-      // console.log('in the multiply case');
       if(checkMultiply(up1, up2, rackSelection)) {
         numSolutions++;
       }
@@ -201,7 +212,6 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
       }
       return numSolutions;
     case '&divide':
-      // console.log('in the division case');
       if(checkDivide(up1, up2, rackSelection)) {
         numSolutions++;
       }
@@ -216,7 +226,6 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
       }
       return numSolutions;
     default:
-      // console.log('default case');
       if(checkAll(up1, up2, rackSelection)) {
         numSolutions++;
       }
@@ -243,6 +252,8 @@ Game.prototype.commitMove = function() {
   var validMove = evaluatePlacement(rackTile, boardSpace);
   if (validMove === 0) { alert('Invalid move'); return false; };
 
+  passed = false;
+
   //Make the move in the board array, then re-render the board to reflect the move
   currentPlayer.removeTileFromRack(rackTile);
   this.board[boardSpace.attr('row')][boardSpace.attr('col')] = rackTile;
@@ -252,6 +263,7 @@ Game.prototype.commitMove = function() {
   var moveScore = this.determineScore(rackTile, boardText, validMove);
   currentPlayer.incrementScore(moveScore);
   currentPlayer.renderScore();
+  this.renderPlayers();
 
   //If the player successfully played on an operation sign, they draw a free tile
   if(boardText === '+' || boardText === '-' || boardText === 'x' || boardText === '&divide') {
@@ -277,8 +289,22 @@ Game.prototype.determineScore = function(tileValue, squareValue, numSolutions) {
   return score;
 }
 
+var passed = false;
+
 //Switch the turn to the next player
 Game.prototype.nextTurn = function() {
+  //Make sure everyone hasn't passed consecutively without making a move, which would mean the game is over.
+  if(passed) {
+    this.passCount++;
+  }
+  if(this.passCount >= this.players.length) {
+    this.end();
+  }
+  if(this.determineEndOfGame()) {
+    this.end();
+  }
+  passed = true;
+
   if(this.activePlayerIndex === this.players.length - 1) {
     this.activePlayerIndex = 0;
   } else {
@@ -286,7 +312,7 @@ Game.prototype.nextTurn = function() {
   }
   this.players[this.activePlayerIndex].draw(this.pool);
   this.players[this.activePlayerIndex].renderScore();
-  // $('#move-btn').toggleClass('hide');
+
 }
 
 //Add a player to the game
@@ -333,6 +359,27 @@ Game.prototype.determineEndOfGame = function() {
   }
 }
 
+Game.prototype.end = function() {
+  var winners = [];
+  var topScore = 0;
+  this.players.forEach(function(player) {
+    if(player.score > topScore) {
+      topScore = player.score;
+      winners = [];
+      winners.push(player);
+    }
+    if(player.score === topScore) {
+      topScore = player.score;
+      winners.push(player);
+    }
+  });
+  if(winners.length > 1) {
+    alert('Game Over! It was a tie at ' + topScore + 'points.');
+  } else {
+    alert('Game Over!' + winners[0] + 'won with ' + topScore + 'points.')
+  }
+}
+
 //Event listeners
 // $('#rack, #board').on('click', 'div', selectSquare);
 $('#board').on('click', 'div', selection('#board'));
@@ -346,6 +393,7 @@ $('#turn-btn').on('click', function() {
 $('#add-player').on('click', function(e) {
   e.preventDefault();
   players.push(new Player($('#player-name').val()));
+  $('#player-name').val('').focus();
   if(players.length >= 2) {
     $('#start').show();
   }
@@ -355,16 +403,13 @@ $('#start').on('click', function(e) {
   game = new Game();
   game.players = players;
   $('.start-form').hide();
+  $('table').show();
   game.renderBoard();
+  game.renderPlayers();
   game.players[game.activePlayerIndex].draw(game.pool);
   game.players[game.activePlayerIndex].renderScore();
 });
 
 $('#start').hide();
+$('table').hide();
 var players = [];
-// var game = new Game();
-// game.renderBoard();
-// var player = new Player();
-// player.rack = [7, 3, 12, 4, 6, 8, 2];
-// player.renderRack();
-// game.addPlayer(player);
