@@ -345,6 +345,7 @@ Game.prototype.nextTurn = function() {
     activePlayerIndex++;
   }
   this.players[activePlayerIndex].draw();
+  this.players[activePlayerIndex].renderScore();
   $('#buttons button').toggleClass('hide');
 }
 
@@ -474,6 +475,7 @@ $('#start').on('click', function(e) {
   game = new Game();
   game.players = players;
   game.renderBoard();
+  game.players[game.activePlayerIndex].renderScore();
 });
 
 $('#start').hide();
