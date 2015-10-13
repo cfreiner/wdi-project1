@@ -214,28 +214,28 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
   //Two squares above the selection
   var up1 = parseInt($('.square[row="' + (boardX - 1) + '"][col="' + boardY + '"]').text());
   var up2 = parseInt($('.square[row="' + (boardX - 2) + '"][col="' + boardY + '"]').text());
-  console.log('up',up1, up2);
+  // console.log('up',up1, up2);
 
   //Two squares below
   var down1 = parseInt($('.square[row="' + (boardX + 1) + '"][col="' + boardY + '"]').text());
   var down2 = parseInt($('.square[row="' + (boardX + 2) + '"][col="' + boardY + '"]').text());
-  console.log('down',down1, down2);
+  // console.log('down',down1, down2);
 
   //Two squares left
   var left1 = parseInt($('.square[row="' + boardX + '"][col="' + (boardY - 1) + '"]').text());
   var left2 = parseInt($('.square[row="' + boardX + '"][col="' + (boardY - 2) + '"]').text());
-  console.log('left',left1, left2);
+  // console.log('left',left1, left2);
 
   //Two squares right
   var right1 = parseInt($('.square[row="' + boardX + '"][col="' + (boardY + 1) + '"]').text());
   var right2 = parseInt($('.square[row="' + boardX + '"][col="' + (boardY + 2) + '"]').text());
-  console.log('right',right1, right2);
+  // console.log('right',right1, right2);
 
   //Evaluate based on the symbol on the square
   var numSolutions = 0;
   switch(boardSelection.text()) {
     case '+':
-      console.log('in the plus case');
+      // console.log('in the plus case');
       if(checkAdd(up1, up2, rackSelection)) {
         numSolutions++;
       }
@@ -250,7 +250,7 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
       }
       return numSolutions;
     case '-':
-      console.log('in the minus case');
+      // console.log('in the minus case');
       if(checkSubtract(up1, up2, rackSelection)) {
         numSolutions++;
       }
@@ -265,7 +265,7 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
       }
       return numSolutions;
     case 'x':
-      console.log('in the multiply case');
+      // console.log('in the multiply case');
       if(checkMultiply(up1, up2, rackSelection)) {
         numSolutions++;
       }
@@ -280,7 +280,7 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
       }
       return numSolutions;
     case '&divide':
-      console.log('in the division case');
+      // console.log('in the division case');
       if(checkDivide(up1, up2, rackSelection)) {
         numSolutions++;
       }
@@ -295,7 +295,7 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
       }
       return numSolutions;
     default:
-      console.log('default case');
+      // console.log('default case');
       if(checkAll(up1, up2, rackSelection)) {
         numSolutions++;
       }
@@ -325,6 +325,7 @@ Game.prototype.commitMove = function() {
   this.board[boardSpace.attr('row')][boardSpace.attr('col')] = rackTile;
   this.renderBoard();
   if(this.determineEndOfTurn(this.players[this.activePlayerIndex])) {
+    $('#buttons button').toggleClass('hide');
     alert('end of turn');
   }
 };
@@ -337,6 +338,7 @@ Game.prototype.nextTurn = function() {
     activePlayerIndex++;
   }
   this.players[activePlayerIndex].draw();
+  $('#buttons button').toggleClass('hide');
 }
 
 //Add a player to the game
@@ -362,7 +364,7 @@ var checkDivide = function(a, b, c) {
 };
 
 var checkAll = function(a, b, c) {
-  console.log('a:',a,'b:',b,'c',c)
+  // console.log('a:',a,'b:',b,'c',c)
   return checkAdd(a, b, c) || checkSubtract(a, b, c) || checkMultiply(a, b, c) || checkDivide(a, b, c);
 }
 
@@ -372,11 +374,12 @@ var locateNumbersInArray = function(arr) {
   var numIndexArray = [];
   for(var i = 0; i < 14; i++) {
     for(var j = 0; j < 14; j++) {
-      if(parseInt(arr[i][j])) {
+      if(arr[i][j] !== '3x' && arr[i][j] !== '2x' && parseInt(arr[i][j])) {
         numIndexArray.push([i,j]);
       }
     }
   }
+  console.log(numIndexArray);
   return numIndexArray;
 }
 
@@ -387,25 +390,37 @@ var getAdjacentEmptySquares = function(arr) {
   numbers.forEach(function(item) {
     var x = item[0];
     var y = item[1];
-    if(!arr[x+1][y]) {
+    if(!arr[x+1][y] && !findArrayInArray(emptySquares, [x+1, y])) {
       emptySquares.push([x+1, y]);
     }
-    if(!arr[x-1][y]) {
+    if(!arr[x-1][y] && !findArrayInArray(emptySquares, [x-1, y])) {
       emptySquares.push([x-1, y]);
     }
-    if(!arr[x][y+1]) {
+    if(!arr[x][y+1] && !findArrayInArray(emptySquares, [x, y+1])) {
       emptySquares.push([x, y+1]);
     }
-    if(!arr[x][y-1]) {
+    if(!arr[x][y-1] && !findArrayInArray(emptySquares, [x, y-1])) {
       emptySquares.push([x, y-1]);
     }
   });
-};
+  console.log(emptySquares);
+  return emptySquares;
+}
+
+//Find an array in an array using Lodash deep equals
+var findArrayInArray = function(arr1, arr2) {
+  for(var i = 0; i < arr1.length; i++) {
+    if(_.isEqual(arr1[i], arr2)) {
+      return true;
+    }
+  }
+  return false;
+}
 
 //Get an array of possible moves for a player
 //Empty array = no moves = turn over
 Game.prototype.getPossibleMoves = function(player) {
-  var empty = getAdjacentEmptySquares(locateNumbersInArray(this.board));
+  var empty = getAdjacentEmptySquares(this.board);
   var rack = player.rack;
   var possibleMoves = [];
   rack.forEach(function(tile) {
@@ -416,6 +431,7 @@ Game.prototype.getPossibleMoves = function(player) {
       };
     });
   });
+  console.log(possibleMoves);
   return possibleMoves;
 }
 
@@ -432,9 +448,11 @@ Game.prototype.determineEndOfTurn = function(player) {
 // $('#rack, #board').on('click', 'div', selectSquare);
 $('#board').on('click', 'div', selection('#board'));
 $('#rack').on('click', 'div', selection('#rack'));
-
 $('#move-btn').on('click', function() {
   game.commitMove();
+});
+$('#turn-btn').on('click', function() {
+  game.nextTurn();
 });
 
 var game = new Game();
