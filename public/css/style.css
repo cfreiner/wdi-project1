@@ -29,7 +29,7 @@
   margin-top: 20px;
 }
 
-.selected {
+.selected, .chosen {
   background-color: skyblue;
 }
 
