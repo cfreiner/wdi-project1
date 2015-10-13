@@ -35,7 +35,7 @@ var locateNumbersInArray = function(arr) {
   var numIndexArray = [];
   for(var i = 0; i < 14; i++) {
     for(var j = 0; j < 14; j++) {
-      if(arr[i][j] !== '3x' && arr[i][j] !== '2x' && parseInt(arr[i][j])) {
+      if(arr[i][j] && arr[i][j].displayType === 'tile') {
         numIndexArray.push([i,j]);
       }
     }
@@ -45,17 +45,10 @@ var locateNumbersInArray = function(arr) {
 
 //Check if a square is open to place a tile
 var checkOpenSquare = function(value) {
-  if(value === null ||
-    value === '2x' ||
-    value === '3x' ||
-    value === '+' ||
-    value === '-' ||
-    value === '&divide' ||
-    value === 'x') {
+  if(!value || value.displayType !== 'tile') {
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 //Find empty squares with adjacent numbered squares

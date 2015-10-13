@@ -18,10 +18,21 @@
   font-size: 30px;
   box-sizing: border-box;
   font-weight: bold;
+  background-color: #FFEB3B;
 }
 
 .square:hover {
-  background-color: salmon;
+  background-color: #673AB7;
+  cursor: default;
+}
+
+#rack .square {
+  background-color: #FF5722;
+  color: #FFFFFF;
+}
+
+#rack .square:hover {
+  background-color: #673AB7;
   cursor: default;
 }
 
@@ -29,7 +40,7 @@
   margin: 20px;
 }
 
-.selected, .chosen {
+.selected {
   background-color: skyblue;
 }
 
@@ -51,4 +62,24 @@ table {
 
 .active {
   background-color: skyblue;
+}
+
+.tile {
+  background-color: #FF5722;
+  color: #FFFFFF;
+}
+
+.operation {
+  background-color: #2196F3;
+  color: #BBDEFB;
+}
+
+.square.2x {
+  background-color: #4CAF50;
+  color: #C8E6C9;
+}
+
+.square.3x {
+  background-color: #F44336;
+  color: #FFCDD2;
 }
