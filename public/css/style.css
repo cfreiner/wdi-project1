@@ -80,6 +80,8 @@ button {
 .square:hover {
   background-color: #673AB7;
   cursor: default;
+  transform: scale(1.1);
+  box-shadow: 1px 1px 2px #673AB7;
 }
 
 #rack .square {
@@ -89,6 +91,12 @@ button {
 
 #rack .square:hover {
   background-color: #673AB7;
+  -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+        -o-transform: scale(1.1);
+          transform: scale(1.1);
+  box-shadow: 1px 1px 2px #673AB7;
   cursor: default;
 }
 
@@ -97,7 +105,17 @@ button {
 }
 
 .selected {
-  background-color: #673AB7 !important;
+  -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+        -o-transform: scale(1.1);
+          transform: scale(1.1);
+  box-shadow: 1px 1px 2px #673AB7;
+  -webkit-animation: shake 1.5s linear infinite;
+    -moz-animation: shake 1.5s linear infinite;
+      -ms-animation: shake 1.5s linear infinite;
+        -o-animation: shake 1.5s linear infinite;
+          animation: shake 1.5s linear infinite;
 }
 
 #content {
@@ -135,4 +153,22 @@ td {
 .times-three {
   background-color: #F44336;
   color: #FFCDD2;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(0);
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
 }
