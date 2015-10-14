@@ -13,21 +13,50 @@ h1, h3, label, table {
 h1 {
   font-size: 4em;
   letter-spacing: 0.75em;
+  font-weight: 1500;
+}
+
+input[type="text"] {
+  border: none;
+  border-bottom: 2px solid #FFFFFF;
+  font-size: 1.5em;
   font-weight: 900;
+  color: #FFFFFF;
+  background-color: inherit;
+  outline: none;
+  margin-right: 15px;
+}
+
+label {
+  font-size: 1.5em;
+  font-weight: 900;
+}
+
+table {
+  display: inline-block;
+}
+
+button {
+  font-size: 1.5em;
+  font-weight: 900;
+  background-color: #FFEB3B;
+  border: none;
+  padding: 12px;
+  border-radius: 2px;
 }
 
 #board {
   width: 700px;
   height: 700px;
   margin: 20px auto 0px auto;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
 }
 
 .square {
   display: inline-block;
   height: 50px;
   width: 50px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   line-height: 50px;
   font-size: 30px;
   box-sizing: border-box;
@@ -63,31 +92,7 @@ h1 {
 }
 
 .hide {
-  display: none;
-}
-
-button {
-  font-size: 1.5em;
-  font-weight: 900;
-  background-color: #FFEB3B;
-  border: none;
-}
-
-input[type="text"] {
-  border: none;
-  border-bottom: 2px solid #FFFFFF;
-  font-size: 1.5em;
-  background-color: inherit;
-  outline: none;
-}
-
-label {
-  font-size: 1.5em;
-  font-weight: 900;
-}
-
-table {
-  display: inline-block;
+  visibility: hidden;
 }
 
 .active {
@@ -105,7 +110,7 @@ table {
 }
 
 .times-two {
-  background-color: #4CAF50 !important;
+  background-color: #4CAF50;
   color: #C8E6C9;
 }
 

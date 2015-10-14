@@ -341,6 +341,7 @@ Game.prototype.determineEndOfTurn = function(player) {
   }
 }
 
+//Determine if the game should be over because there are no more legal moves
 Game.prototype.determineEndOfGame = function() {
   if(this.pool.length === 0) {
     this.players.forEach(function(player) {
@@ -352,6 +353,7 @@ Game.prototype.determineEndOfGame = function() {
   }
 }
 
+//End the game and display the winner
 Game.prototype.end = function() {
   var winners = [];
   var topScore = 0;
@@ -374,7 +376,6 @@ Game.prototype.end = function() {
 }
 
 //Event listeners
-// $('#rack, #board').on('click', 'div', selectSquare);
 $('#board').on('click', 'div', selection('#board'));
 $('#rack').on('click', 'div', selection('#rack'));
 $('#move-btn').on('click', function() {
@@ -388,7 +389,7 @@ $('#add-player').on('click', function(e) {
   players.push(new Player($('#player-name').val()));
   $('#player-name').val('').focus();
   if(players.length >= 2) {
-    $('#start').show();
+    $('#start').removeClass('hide');
   }
 });
 $('#start').on('click', function(e) {
@@ -396,13 +397,11 @@ $('#start').on('click', function(e) {
   game = new Game();
   game.players = players;
   $('.start-form').hide();
-  $('table').show();
+  $('table').removeClass('hide');
   game.renderBoard();
   game.renderPlayers();
   game.players[game.activePlayerIndex].draw(game.pool);
   game.players[game.activePlayerIndex].renderScore();
 });
 
-$('#start').hide();
-$('table').hide();
 var players = [];
