@@ -85,6 +85,7 @@ var Game = function() {
   this.passCount = 0;
 }
 
+//Constructor for game pieces/tiles/board markings
 var Piece = function(content, displayType) {
   this.content = content;
   this.displayType = displayType;
@@ -363,7 +364,9 @@ Game.prototype.end = function() {
     swal('Game Over!', winners[0].name + ' won with ' + topScore + ' points.')
   }
   console.log(winners);
-  $('#board','#rack','button').off();
+  // $('#board','#rack','button').off();
+  $('#buttons').hide();
+  $('#reset').show();
 }
 
 var players = [];

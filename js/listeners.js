@@ -42,5 +42,10 @@ $('#start').on('click', function(e) {
   game.players[game.activePlayerIndex].renderScore();
 });
 
+$('#reset button').on('click', function() {
+  document.location.reload();
+});
+
 $('#middle-row, #bottom-row').hide();
 $('.start-form p').hide();
+$('#reset').hide();
