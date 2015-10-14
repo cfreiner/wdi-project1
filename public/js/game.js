@@ -373,6 +373,7 @@ Game.prototype.end = function() {
   } else {
     alert('Game Over!' + winners[0] + 'won with ' + topScore + 'points.')
   }
+  $('#board','#rack','button').off();
 }
 
 //Event listeners
@@ -396,8 +397,8 @@ $('#start').on('click', function(e) {
   e.preventDefault();
   game = new Game();
   game.players = players;
-  $('.start-form').hide();
-  $('table').removeClass('hide');
+  $('.start-form').fadeOut('fast');
+  $('table, footer').removeClass('hide');
   game.renderBoard();
   game.renderPlayers();
   game.players[game.activePlayerIndex].draw(game.pool);

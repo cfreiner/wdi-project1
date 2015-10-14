@@ -46,5 +46,4 @@ Player.prototype.renderRack = function() {
 //Render the player's info to the DOM
 Player.prototype.renderScore = function() {
   $('#active-player').text(this.name);
-  $('#score').text(this.score);
 }
