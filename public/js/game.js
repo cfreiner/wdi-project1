@@ -228,7 +228,10 @@ Game.prototype.commitMove = function() {
   var currentPlayer = this.players[this.activePlayerIndex];
   //Make sure the move is valid, storing it in a var for scoring purposes
   var validMove = evaluatePlacement(rackTile, boardSpace);
-  if (validMove === 0) { alert('Invalid move'); return false; };
+  if (validMove === 0) {
+    swal('Illegal move!');
+    return false;
+  };
 
   passed = false;
 
@@ -250,8 +253,7 @@ Game.prototype.commitMove = function() {
 
   //Check if the player's turn should be over. If it is, hide the move button and show the end turn button.
   if(this.determineEndOfTurn(currentPlayer)) {
-    // $('#move-btn').toggleClass('hide');
-    alert('end of turn');
+    // alert('end of turn');
   }
 };
 

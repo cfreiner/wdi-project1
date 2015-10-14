@@ -14,9 +14,11 @@ h1, h3, label, table {
 h1 {
   font-size: 4em;
   letter-spacing: 0.75em;
+  text-indent: 0.75em;
   font-weight: 1500;
   cursor: default;
   margin-bottom: 25px;
+  text-align: center;
 }
 
 input[type="text"] {
@@ -60,7 +62,8 @@ button {
 #board {
   width: 700px;
   height: 700px;
-  margin-bottom: 25px;
+  margin: 0 auto 25px auto;
+  text-align: center;
 }
 
 .square {

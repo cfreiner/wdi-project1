@@ -35,11 +35,12 @@ $('#start').on('click', function(e) {
   game = new Game();
   game.players = players;
   $('.start-form').fadeOut('fast');
-  $('table, footer').removeClass('hide');
   game.renderBoard();
   game.renderPlayers();
+  $('#middle-row, #bottom-row').fadeIn('fast');
   game.players[game.activePlayerIndex].draw(game.pool);
   game.players[game.activePlayerIndex].renderScore();
 });
 
+$('#middle-row, #bottom-row').hide();
 $('.start-form p').hide();
