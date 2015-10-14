@@ -1,5 +1,5 @@
 * {
-  font-family: 'Roboto', 'Noto Sans', sans-serif;
+  font-family: 'Roboto'!important, 'Noto Sans', sans-serif;
 }
 
 body {
@@ -34,7 +34,8 @@ label {
 }
 
 table {
-  display: inline-block;
+  /*display: inline-block;*/
+  font-size: 1.5em;
 }
 
 button {
@@ -49,7 +50,7 @@ button {
 #board {
   width: 700px;
   height: 700px;
-  margin: 20px auto 0px auto;
+  /*margin: 20px auto 0px auto;*/
   /*border: 1px solid black;*/
 }
 
@@ -90,6 +91,10 @@ button {
 
 #content {
   text-align: center;
+}
+
+td {
+  text-align: left;
 }
 
 .hide {
