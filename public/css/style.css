@@ -1,5 +1,6 @@
 * {
   font-family: 'Roboto'!important, 'Noto Sans', sans-serif;
+  outline: none;
 }
 
 body {
@@ -15,6 +16,7 @@ h1 {
   letter-spacing: 0.75em;
   font-weight: 1500;
   cursor: default;
+  margin-bottom: 25px;
 }
 
 input[type="text"] {
@@ -33,8 +35,16 @@ label {
   font-weight: 900;
 }
 
+p {
+  font-size: 1.5em;
+  font-weight: 900;
+  color: #FFFFFF;
+  position: relative;
+  right: 50px;
+}
+
 table {
-  /*display: inline-block;*/
+  margin-top: 25px;
   font-size: 1.5em;
 }
 
@@ -50,15 +60,13 @@ button {
 #board {
   width: 700px;
   height: 700px;
-  /*margin: 20px auto 0px auto;*/
-  /*border: 1px solid black;*/
+  margin-bottom: 25px;
 }
 
 .square {
   display: inline-block;
   height: 50px;
   width: 50px;
-  /*border: 1px solid black;*/
   line-height: 50px;
   font-size: 30px;
   box-sizing: border-box;
@@ -86,7 +94,7 @@ button {
 }
 
 .selected {
-  background-color: #673AB7;
+  background-color: #673AB7 !important;
 }
 
 #content {
@@ -95,6 +103,7 @@ button {
 
 td {
   text-align: left;
+  padding-left: 5px;
 }
 
 .hide {
@@ -102,7 +111,7 @@ td {
 }
 
 .active {
-  background-color: #607D8B;
+  background-color: #4CAF50;
 }
 
 .tile {

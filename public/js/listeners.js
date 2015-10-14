@@ -24,8 +24,10 @@ $('#add-player').on('click', function(e) {
   e.preventDefault();
   players.push(new Player($('#player-name').val()));
   $('#player-name').val('').focus();
+  $('.start-form p').fadeIn('fast').fadeOut('fast');
   if(players.length >= 2) {
     $('#start').removeClass('hide');
+    $('.start-form p').css('right','115px');
   }
 });
 $('#start').on('click', function(e) {
@@ -39,3 +41,5 @@ $('#start').on('click', function(e) {
   game.players[game.activePlayerIndex].draw(game.pool);
   game.players[game.activePlayerIndex].renderScore();
 });
+
+$('.start-form p').hide();
