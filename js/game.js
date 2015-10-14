@@ -1,3 +1,4 @@
+//Game constructor
 var Game = function() {
   this.board = [];
   for(var i = 0; i < 14; i++) {
@@ -85,7 +86,7 @@ var Game = function() {
   this.passCount = 0;
 }
 
-//Constructor for game pieces/tiles/board markings
+//Constructor for things that occupy squares
 var Piece = function(content, displayType) {
   this.content = content;
   this.displayType = displayType;
@@ -123,8 +124,6 @@ Game.prototype.renderPlayers = function() {
 
 //Returns the number of directions for which the move provides a solution
 //Max would be all 4 directions
-//Typical rack selection (int): parseInt($('#rack .selected').text())
-//Typical board selection (jquery object): $('#board .selected')
 var evaluatePlacement = function(rackSelection, boardSelection) {
   var boardX = parseInt(boardSelection.attr('row'));
   var boardY = parseInt(boardSelection.attr('col'));
@@ -227,13 +226,13 @@ Game.prototype.commitMove = function() {
   var boardText = boardSpace.text();
   var rackTile = parseInt($('#rack .selected').text());
   var currentPlayer = this.players[this.activePlayerIndex];
+
   //Make sure the move is valid, storing it in a var for scoring purposes
   var validMove = evaluatePlacement(rackTile, boardSpace);
   if (validMove === 0) {
     swal('Illegal move!');
     return false;
   };
-
   passed = false;
 
   //Make the move in the board array, then re-render the board to reflect the move
@@ -251,11 +250,6 @@ Game.prototype.commitMove = function() {
   if(boardText === '+' || boardText === '-' || boardText === 'x' || boardText === '&divide') {
     currentPlayer.draw(this.pool, 1);
   }
-
-  //Check if the player's turn should be over. If it is, hide the move button and show the end turn button.
-  if(this.determineEndOfTurn(currentPlayer)) {
-    // alert('end of turn');
-  }
 };
 
 //Determine the score of a move
@@ -269,8 +263,6 @@ Game.prototype.determineScore = function(tileValue, squareValue, numSolutions) {
   }
   return score;
 }
-
-var passed = false;
 
 //Switch the turn to the next player
 Game.prototype.nextTurn = function() {
@@ -286,11 +278,14 @@ Game.prototype.nextTurn = function() {
   }
   passed = true;
 
+  //Cycle the turn back to the 0 index if necessary
   if(this.activePlayerIndex === this.players.length - 1) {
     this.activePlayerIndex = 0;
   } else {
     this.activePlayerIndex++;
   }
+
+  //New active player draws tiles up to 7
   this.players[this.activePlayerIndex].draw(this.pool);
   this.players[this.activePlayerIndex].renderScore();
   this.renderPlayers();
@@ -347,13 +342,11 @@ Game.prototype.end = function() {
   var topScore = 0;
   this.players.forEach(function(player) {
     if(player.score > topScore) {
-      console.log('in greater score if');
       topScore = player.score;
       winners = [];
       winners.push(player);
     } else
     if(player.score === topScore) {
-      console.log('in tie if');
       topScore = player.score;
       winners.push(player);
     }
@@ -363,10 +356,10 @@ Game.prototype.end = function() {
   } else {
     swal('Game Over!', winners[0].name + ' won with ' + topScore + ' points.')
   }
-  console.log(winners);
-  // $('#board','#rack','button').off();
   $('#buttons').hide();
   $('#reset').show();
 }
 
+//Global variables
+var passed = false;
 var players = [];

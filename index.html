@@ -10,64 +10,56 @@
   </head>
   <body>
     <div id="content" class="container">
-
       <div class="row">
-      <header>
-        <h1>(mixma+h)</h1>
-        <form class="start-form">
-          <label for="player-name">name: </label>
-          <input id="player-name" type="text" size="8">
-          <button id="add-player">add player</button>
-          <button id="start" class="hide">start game</button>
-          <p>added!</p>
-        </form>
-      </header>
+        <header>
+          <h1>(mixma+h)</h1>
+          <form class="start-form">
+            <label for="player-name">name: </label>
+            <input id="player-name" type="text" size="8">
+            <button id="add-player">add player</button>
+            <button id="start" class="hide">start game</button>
+            <p>added!</p>
+          </form>
+        </header>
       </div>
-
-
       <div id="middle-row" class="row">
-      <div class="col-md-2">
-      <div>
-        <table>
-          <thead>
-            <th colspan="2">scoreboard</th>
-          </thead>
-          <tbody id="player-list">
-
-          </tbody>
-        </table>
-      </div>
-      </div>
-
-      <div class="col-md-8">
-        <div id="board"></div>
-      </div>
-
-      </div>
-
-      <div id="bottom-row" class="row">
-      <footer>
+        <div class="col-md-2">
         <div>
-          <h3><span id="active-player"></span>'s tile rack</h3>
-          <div id="rack">
-            <div class="rack-0"></div>
-            <div class="rack-1"></div>
-            <div class="rack-2"></div>
-            <div class="rack-3"></div>
-            <div class="rack-4"></div>
-            <div class="rack-5"></div>
-            <div class="rack-6"></div>
+          <table>
+            <thead>
+              <th colspan="2">scoreboard</th>
+            </thead>
+            <tbody id="player-list">
+            </tbody>
+          </table>
+        </div>
+        </div>
+        <div class="col-md-8">
+          <div id="board"></div>
+        </div>
+      </div>
+      <div id="bottom-row" class="row">
+        <footer>
+          <div>
+            <h3><span id="active-player"></span>'s tile rack</h3>
+            <div id="rack">
+              <div class="rack-0"></div>
+              <div class="rack-1"></div>
+              <div class="rack-2"></div>
+              <div class="rack-3"></div>
+              <div class="rack-4"></div>
+              <div class="rack-5"></div>
+              <div class="rack-6"></div>
+            </div>
           </div>
-        </div>
-
-        <div id="buttons">
-          <button id="move-btn">Submit Move</button>
-          <button id="turn-btn">End Turn</button>
-        </div>
-        <div id="reset">
-          <button>Reset</button>
-        </div>
-      </footer>
+          <div id="buttons">
+            <button id="move-btn">Submit Move</button>
+            <button id="turn-btn">End Turn</button>
+          </div>
+          <div id="reset">
+            <button>Reset</button>
+          </div>
+        </footer>
       </div>
     </div>
     <script src="lib/lodash.min.js"></script>

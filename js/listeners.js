@@ -11,15 +11,21 @@ var selection = function(parentElement) {
   }
 }
 
-//Event listeners
+//Selection listeners
 $('#board').on('click', 'div', selection('#board'));
 $('#rack').on('click', 'div', selection('#rack'));
+
+//Move button
 $('#move-btn').on('click', function() {
   game.commitMove();
 });
+
+//End turn button
 $('#turn-btn').on('click', function() {
   game.nextTurn();
 });
+
+//Add player button
 $('#add-player').on('click', function(e) {
   e.preventDefault();
   players.push(new Player($('#player-name').val()));
@@ -30,6 +36,8 @@ $('#add-player').on('click', function(e) {
     $('.start-form p').css('right','115px');
   }
 });
+
+//Start game button
 $('#start').on('click', function(e) {
   e.preventDefault();
   game = new Game();
@@ -42,10 +50,12 @@ $('#start').on('click', function(e) {
   game.players[game.activePlayerIndex].renderScore();
 });
 
+//Reset game button
 $('#reset button').on('click', function() {
   document.location.reload();
 });
 
+//Elements that are hidden initially
 $('#middle-row, #bottom-row').hide();
 $('.start-form p').hide();
 $('#reset').hide();
