@@ -1,5 +1,6 @@
 * {
-  font-family: 'Roboto', 'Noto Sans', sans-serif;
+  font-family: 'Roboto'!important, 'Noto Sans', sans-serif;
+  outline: none;
 }
 
 body {
@@ -13,8 +14,11 @@ h1, h3, label, table {
 h1 {
   font-size: 4em;
   letter-spacing: 0.75em;
+  text-indent: 0.75em;
   font-weight: 1500;
   cursor: default;
+  margin-bottom: 25px;
+  text-align: center;
 }
 
 input[type="text"] {
@@ -33,8 +37,17 @@ label {
   font-weight: 900;
 }
 
+p {
+  font-size: 1.5em;
+  font-weight: 900;
+  color: #FFFFFF;
+  position: relative;
+  right: 50px;
+}
+
 table {
-  display: inline-block;
+  margin-top: 25px;
+  font-size: 1.5em;
 }
 
 button {
@@ -49,15 +62,14 @@ button {
 #board {
   width: 700px;
   height: 700px;
-  margin: 20px auto 0px auto;
-  /*border: 1px solid black;*/
+  margin: 0 auto 25px auto;
+  text-align: center;
 }
 
 .square {
   display: inline-block;
   height: 50px;
   width: 50px;
-  /*border: 1px solid black;*/
   line-height: 50px;
   font-size: 30px;
   box-sizing: border-box;
@@ -68,6 +80,8 @@ button {
 .square:hover {
   background-color: #673AB7;
   cursor: default;
+  transform: scale(1.1);
+  box-shadow: 1px 1px 2px #673AB7;
 }
 
 #rack .square {
@@ -77,6 +91,12 @@ button {
 
 #rack .square:hover {
   background-color: #673AB7;
+  -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+        -o-transform: scale(1.1);
+          transform: scale(1.1);
+  box-shadow: 1px 1px 2px #673AB7;
   cursor: default;
 }
 
@@ -85,11 +105,26 @@ button {
 }
 
 .selected {
-  background-color: #673AB7;
+  -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+        -o-transform: scale(1.1);
+          transform: scale(1.1);
+  box-shadow: 1px 1px 2px #673AB7;
+  -webkit-animation: shake 1.5s linear infinite;
+    -moz-animation: shake 1.5s linear infinite;
+      -ms-animation: shake 1.5s linear infinite;
+        -o-animation: shake 1.5s linear infinite;
+          animation: shake 1.5s linear infinite;
 }
 
 #content {
   text-align: center;
+}
+
+td {
+  text-align: left;
+  padding-left: 5px;
 }
 
 .hide {
@@ -97,7 +132,7 @@ button {
 }
 
 .active {
-  background-color: #607D8B;
+  background-color: #4CAF50;
 }
 
 .tile {
@@ -118,4 +153,22 @@ button {
 .times-three {
   background-color: #F44336;
   color: #FFCDD2;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(0);
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
 }

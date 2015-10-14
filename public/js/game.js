@@ -228,7 +228,10 @@ Game.prototype.commitMove = function() {
   var currentPlayer = this.players[this.activePlayerIndex];
   //Make sure the move is valid, storing it in a var for scoring purposes
   var validMove = evaluatePlacement(rackTile, boardSpace);
-  if (validMove === 0) { alert('Invalid move'); return false; };
+  if (validMove === 0) {
+    swal('Illegal move!');
+    return false;
+  };
 
   passed = false;
 
@@ -250,8 +253,7 @@ Game.prototype.commitMove = function() {
 
   //Check if the player's turn should be over. If it is, hide the move button and show the end turn button.
   if(this.determineEndOfTurn(currentPlayer)) {
-    // $('#move-btn').toggleClass('hide');
-    alert('end of turn');
+    // alert('end of turn');
   }
 };
 
@@ -344,20 +346,23 @@ Game.prototype.end = function() {
   var topScore = 0;
   this.players.forEach(function(player) {
     if(player.score > topScore) {
+      console.log('in greater score if');
       topScore = player.score;
       winners = [];
       winners.push(player);
-    }
+    } else
     if(player.score === topScore) {
+      console.log('in tie if');
       topScore = player.score;
       winners.push(player);
     }
   });
   if(winners.length > 1) {
-    alert('Game Over! It was a tie at ' + topScore + 'points.');
+    swal('Game Over!', 'It was a tie at ' + topScore + ' points.');
   } else {
-    alert('Game Over!' + winners[0] + 'won with ' + topScore + 'points.')
+    swal('Game Over!', winners[0].name + ' won with ' + topScore + ' points.')
   }
+  console.log(winners);
   $('#board','#rack','button').off();
 }
 
