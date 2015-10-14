@@ -8,6 +8,9 @@ var Player = function(name) {
 //Draw a number of tiles from the specified pool
 //If no number is specified, it will draw until the rack is full (7 tiles)
 Player.prototype.draw = function(pool, numTiles) {
+  if(pool.length === 0) {
+    return;
+  }
   if(numTiles) {
     for(var i = 0; i < numTiles; i++) {
       this.rack.push(pool.giveTile());
@@ -43,5 +46,4 @@ Player.prototype.renderRack = function() {
 //Render the player's info to the DOM
 Player.prototype.renderScore = function() {
   $('#active-player').text(this.name);
-  $('#score').text(this.score);
 }

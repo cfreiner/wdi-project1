@@ -2,26 +2,81 @@
   font-family: 'Roboto', 'Noto Sans', sans-serif;
 }
 
+body {
+  background-color: #9C27B0;
+}
+
+h1, h3, label, table {
+  color: #FFFFFF;
+}
+
+h1 {
+  font-size: 4em;
+  letter-spacing: 0.75em;
+  font-weight: 1500;
+  cursor: default;
+}
+
+input[type="text"] {
+  border: none;
+  border-bottom: 2px solid #FFFFFF;
+  font-size: 1.5em;
+  font-weight: 900;
+  color: #FFFFFF;
+  background-color: inherit;
+  outline: none;
+  margin-right: 15px;
+}
+
+label {
+  font-size: 1.5em;
+  font-weight: 900;
+}
+
+table {
+  display: inline-block;
+}
+
+button {
+  font-size: 1.5em;
+  font-weight: 900;
+  background-color: #FFEB3B;
+  border: none;
+  padding: 12px;
+  border-radius: 2px;
+}
+
 #board {
   width: 700px;
   height: 700px;
   margin: 20px auto 0px auto;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
 }
 
 .square {
   display: inline-block;
   height: 50px;
   width: 50px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   line-height: 50px;
   font-size: 30px;
   box-sizing: border-box;
   font-weight: bold;
+  background-color: #FFEB3B;
 }
 
 .square:hover {
-  background-color: salmon;
+  background-color: #673AB7;
+  cursor: default;
+}
+
+#rack .square {
+  background-color: #FF5722;
+  color: #FFFFFF;
+}
+
+#rack .square:hover {
+  background-color: #673AB7;
   cursor: default;
 }
 
@@ -29,8 +84,8 @@
   margin: 20px;
 }
 
-.selected, .chosen {
-  background-color: skyblue;
+.selected {
+  background-color: #673AB7;
 }
 
 #content {
@@ -38,17 +93,29 @@
 }
 
 .hide {
-  display: none;
-}
-
-button {
-  font-size: 1.25em;
-}
-
-table {
-  display: inline-block;
+  visibility: hidden;
 }
 
 .active {
-  background-color: skyblue;
+  background-color: #607D8B;
+}
+
+.tile {
+  background-color: #FF5722;
+  color: #FFFFFF;
+}
+
+.operation {
+  background-color: #2196F3;
+  color: #BBDEFB;
+}
+
+.times-two {
+  background-color: #4CAF50;
+  color: #C8E6C9;
+}
+
+.times-three {
+  background-color: #F44336;
+  color: #FFCDD2;
 }

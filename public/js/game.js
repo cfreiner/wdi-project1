@@ -8,70 +8,70 @@ var Game = function() {
   }
 
   //Populate the initial state of the board
-  this.board[0][0] = '3x';
-  this.board[0][6] = '3x';
-  this.board[0][7] = '3x';
-  this.board[0][13] = '3x';
-  this.board[6][0] = '3x';
-  this.board[7][0] = '3x';
-  this.board[13][0] = '3x';
-  this.board[13][6] = '3x';
-  this.board[13][7] = '3x';
-  this.board[13][13] = '3x';
-  this.board[6][13] = '3x';
-  this.board[7][13] = '3x';
-  this.board[1][1] = '2x';
-  this.board[1][12] = '2x';
-  this.board[2][2] = '2x';
-  this.board[2][11] = '2x';
-  this.board[3][3] = '2x';
-  this.board[3][10] = '2x';
-  this.board[4][4] = '2x';
-  this.board[4][9] = '2x';
-  this.board[9][4] = '2x';
-  this.board[9][9] = '2x';
-  this.board[10][3] = '2x';
-  this.board[10][10] = '2x';
-  this.board[11][2] = '2x';
-  this.board[11][11] = '2x';
-  this.board[12][1] = '2x';
-  this.board[12][12] = '2x';
-  this.board[1][4] = '&divide';
-  this.board[1][9] = '&divide';
-  this.board[4][1] = '&divide';
-  this.board[4][12] = '&divide';
-  this.board[9][1] = '&divide';
-  this.board[9][12] = '&divide';
-  this.board[12][4] = '&divide';
-  this.board[12][9] = '&divide';
-  this.board[2][5] = '-';
-  this.board[2][8] = '-';
-  this.board[5][2] = '-';
-  this.board[5][11] = '-';
-  this.board[8][2] = '-';
-  this.board[8][11] = '-';
-  this.board[11][5] = '-';
-  this.board[11][8] = '-';
-  this.board[3][6] = '+';
-  this.board[4][7] = '+';
-  this.board[6][4] = '+';
-  this.board[7][3] = '+';
-  this.board[6][10] = '+';
-  this.board[7][9] = '+';
-  this.board[9][6] = '+';
-  this.board[10][7] = '+';
-  this.board[3][7] = 'x';
-  this.board[4][6] = 'x';
-  this.board[6][3] = 'x';
-  this.board[7][4] = 'x';
-  this.board[6][9] = 'x';
-  this.board[7][10] = 'x';
-  this.board[9][7] = 'x';
-  this.board[10][6] = 'x';
-  this.board[6][6] = 1;
-  this.board[6][7] = 2;
-  this.board[7][6] = 3;
-  this.board[7][7] = 4;
+  this.board[0][0] = new Piece('3x', 'times-three');
+  this.board[0][6] = new Piece('3x', 'times-three');
+  this.board[0][7] = new Piece('3x', 'times-three');
+  this.board[0][13] = new Piece('3x', 'times-three');
+  this.board[6][0] = new Piece('3x', 'times-three');
+  this.board[7][0] = new Piece('3x', 'times-three');
+  this.board[13][0] = new Piece('3x', 'times-three');
+  this.board[13][6] = new Piece('3x', 'times-three');
+  this.board[13][7] = new Piece('3x', 'times-three');
+  this.board[13][13] = new Piece('3x', 'times-three');
+  this.board[6][13] = new Piece('3x', 'times-three');
+  this.board[7][13] = new Piece('3x', 'times-three');
+  this.board[1][1] = new Piece('2x', 'times-two');
+  this.board[1][12] = new Piece('2x', 'times-two');;
+  this.board[2][2] = new Piece('2x', 'times-two');;
+  this.board[2][11] = new Piece('2x', 'times-two');;
+  this.board[3][3] = new Piece('2x', 'times-two');;
+  this.board[3][10] = new Piece('2x', 'times-two');;
+  this.board[4][4] = new Piece('2x', 'times-two');;
+  this.board[4][9] = new Piece('2x', 'times-two');;
+  this.board[9][4] = new Piece('2x', 'times-two');;
+  this.board[9][9] = new Piece('2x', 'times-two');;
+  this.board[10][3] = new Piece('2x', 'times-two');;
+  this.board[10][10] = new Piece('2x', 'times-two');;
+  this.board[11][2] = new Piece('2x', 'times-two');;
+  this.board[11][11] = new Piece('2x', 'times-two');;
+  this.board[12][1] = new Piece('2x', 'times-two');;
+  this.board[12][12] = new Piece('2x', 'times-two');;
+  this.board[1][4] = new Piece('&divide', 'operation');
+  this.board[1][9] = new Piece('&divide', 'operation');
+  this.board[4][1] = new Piece('&divide', 'operation');
+  this.board[4][12] = new Piece('&divide', 'operation');
+  this.board[9][1] = new Piece('&divide', 'operation');
+  this.board[9][12] = new Piece('&divide', 'operation');
+  this.board[12][4] = new Piece('&divide', 'operation');
+  this.board[12][9] = new Piece('&divide', 'operation');
+  this.board[2][5] = new Piece('-', 'operation');
+  this.board[2][8] = new Piece('-', 'operation');
+  this.board[5][2] = new Piece('-', 'operation');
+  this.board[5][11] = new Piece('-', 'operation');
+  this.board[8][2] = new Piece('-', 'operation');
+  this.board[8][11] = new Piece('-', 'operation');
+  this.board[11][5] = new Piece('-', 'operation');
+  this.board[11][8] = new Piece('-', 'operation');
+  this.board[3][6] = new Piece('+', 'operation');
+  this.board[4][7] = new Piece('+', 'operation');
+  this.board[6][4] = new Piece('+', 'operation');
+  this.board[7][3] = new Piece('+', 'operation');
+  this.board[6][10] = new Piece('+', 'operation');
+  this.board[7][9] = new Piece('+', 'operation');
+  this.board[9][6] = new Piece('+', 'operation');
+  this.board[10][7] = new Piece('+', 'operation');
+  this.board[3][7] = new Piece('x', 'operation');
+  this.board[4][6] = new Piece('x', 'operation');
+  this.board[6][3] = new Piece('x', 'operation');
+  this.board[7][4] = new Piece('x', 'operation');
+  this.board[6][9] = new Piece('x', 'operation');
+  this.board[7][10] = new Piece('x', 'operation');
+  this.board[9][7] = new Piece('x', 'operation');
+  this.board[10][6] = new Piece('x', 'operation');
+  this.board[6][6] = new Piece(1, 'tile');
+  this.board[6][7] = new Piece(2, 'tile');
+  this.board[7][6] = new Piece(3, 'tile');
+  this.board[7][7] = new Piece(4, 'tile');
 
   //Empty player array to start
   //First active player will be at index 0
@@ -85,6 +85,11 @@ var Game = function() {
   this.passCount = 0;
 }
 
+var Piece = function(content, displayType) {
+  this.content = content;
+  this.displayType = displayType;
+}
+
 //Render the game board in the DOM
 Game.prototype.renderBoard = function() {
   var domBoard = $('#board');
@@ -92,7 +97,7 @@ Game.prototype.renderBoard = function() {
   for(var i = 0; i < 14; i++) {
     for(var j = 0; j < 14; j++) {
       if(this.board[i][j]) {
-        domBoard.append('<div class="square" row="' + i + '" col="' + j + '">' + this.board[i][j] + '</div>');
+        domBoard.append('<div class="square ' + this.board[i][j].displayType + '" row="' + i + '" col="' + j + '">' + this.board[i][j].content + '</div>');
       } else {
         domBoard.append('<div class="square" row="' + i + '" col="' + j + '">&nbsp</div>');
       }
@@ -112,33 +117,6 @@ Game.prototype.renderPlayers = function() {
     } else {
       list.append('<tr><td>' + current.name + '</td><td>' + current.score + '</tr>');
     }
-  }
-}
-
-var selectedSquare = null;
-
-//Function for the click listener for squares
-// var selectSquare = function(e) {
-//   if(!selectedSquare) {
-//     selectedSquare = $(e.target);
-//     selectedSquare.toggleClass('selected');
-//   } else {
-//     selectedSquare.toggleClass('selected');
-//     selectedSquare = $(e.target);
-//     selectedSquare.toggleClass('selected');
-//   }
-// }
-
-//Returns a function for use in the click listener
-//Param should be "#board" or "#rack"
-var selection = function(parentElement) {
-  return function(e) {
-    e.stopPropagation();
-    var selected = $(parentElement + ' .selected');
-    if(selected.length > 0) {
-      selected.toggleClass('selected');
-    }
-    $(e.target).toggleClass('selected');
   }
 }
 
@@ -256,7 +234,7 @@ Game.prototype.commitMove = function() {
 
   //Make the move in the board array, then re-render the board to reflect the move
   currentPlayer.removeTileFromRack(rackTile);
-  this.board[boardSpace.attr('row')][boardSpace.attr('col')] = rackTile;
+  this.board[boardSpace.attr('row')][boardSpace.attr('col')] = new Piece(rackTile, 'tile');
   this.renderBoard();
 
   //Determine the move's score and increment the player's score by that number
@@ -312,7 +290,7 @@ Game.prototype.nextTurn = function() {
   }
   this.players[this.activePlayerIndex].draw(this.pool);
   this.players[this.activePlayerIndex].renderScore();
-
+  this.renderPlayers();
 }
 
 //Add a player to the game
@@ -348,6 +326,7 @@ Game.prototype.determineEndOfTurn = function(player) {
   }
 }
 
+//Determine if the game should be over because there are no more legal moves
 Game.prototype.determineEndOfGame = function() {
   if(this.pool.length === 0) {
     this.players.forEach(function(player) {
@@ -359,6 +338,7 @@ Game.prototype.determineEndOfGame = function() {
   }
 }
 
+//End the game and display the winner
 Game.prototype.end = function() {
   var winners = [];
   var topScore = 0;
@@ -378,38 +358,7 @@ Game.prototype.end = function() {
   } else {
     alert('Game Over!' + winners[0] + 'won with ' + topScore + 'points.')
   }
+  $('#board','#rack','button').off();
 }
 
-//Event listeners
-// $('#rack, #board').on('click', 'div', selectSquare);
-$('#board').on('click', 'div', selection('#board'));
-$('#rack').on('click', 'div', selection('#rack'));
-$('#move-btn').on('click', function() {
-  game.commitMove();
-});
-$('#turn-btn').on('click', function() {
-  game.nextTurn();
-});
-$('#add-player').on('click', function(e) {
-  e.preventDefault();
-  players.push(new Player($('#player-name').val()));
-  $('#player-name').val('').focus();
-  if(players.length >= 2) {
-    $('#start').show();
-  }
-});
-$('#start').on('click', function(e) {
-  e.preventDefault();
-  game = new Game();
-  game.players = players;
-  $('.start-form').hide();
-  $('table').show();
-  game.renderBoard();
-  game.renderPlayers();
-  game.players[game.activePlayerIndex].draw(game.pool);
-  game.players[game.activePlayerIndex].renderScore();
-});
-
-$('#start').hide();
-$('table').hide();
 var players = [];
