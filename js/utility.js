@@ -17,7 +17,7 @@ var checkDivide = function(a, b, c) {
 
 var checkAll = function(a, b, c) {
   return checkAdd(a, b, c) || checkSubtract(a, b, c) || checkMultiply(a, b, c) || checkDivide(a, b, c);
-}
+};
 
 //Find an array in an array using Lodash deep equals
 var findArrayInArray = function(arr1, arr2) {
@@ -27,7 +27,7 @@ var findArrayInArray = function(arr1, arr2) {
     }
   }
   return false;
-}
+};
 
 //Returns an array of indexes of numbers in the input array
 //For use with the 14x14 game board array
@@ -41,7 +41,7 @@ var locateNumbersInArray = function(arr) {
     }
   }
   return numIndexArray;
-}
+};
 
 //Check if a square is open to place a tile
 var checkOpenSquare = function(value) {
@@ -49,7 +49,7 @@ var checkOpenSquare = function(value) {
     return true;
   }
   return false;
-}
+};
 
 //Find empty squares with adjacent numbered squares
 var getAdjacentEmptySquares = function(arr) {
@@ -72,4 +72,4 @@ var getAdjacentEmptySquares = function(arr) {
     }
   });
   return emptySquares;
-}
+};

@@ -22,21 +22,21 @@ var Game = function() {
   this.board[6][13] = new Piece('3x', 'times-three');
   this.board[7][13] = new Piece('3x', 'times-three');
   this.board[1][1] = new Piece('2x', 'times-two');
-  this.board[1][12] = new Piece('2x', 'times-two');;
-  this.board[2][2] = new Piece('2x', 'times-two');;
-  this.board[2][11] = new Piece('2x', 'times-two');;
-  this.board[3][3] = new Piece('2x', 'times-two');;
-  this.board[3][10] = new Piece('2x', 'times-two');;
-  this.board[4][4] = new Piece('2x', 'times-two');;
-  this.board[4][9] = new Piece('2x', 'times-two');;
-  this.board[9][4] = new Piece('2x', 'times-two');;
-  this.board[9][9] = new Piece('2x', 'times-two');;
-  this.board[10][3] = new Piece('2x', 'times-two');;
-  this.board[10][10] = new Piece('2x', 'times-two');;
-  this.board[11][2] = new Piece('2x', 'times-two');;
-  this.board[11][11] = new Piece('2x', 'times-two');;
-  this.board[12][1] = new Piece('2x', 'times-two');;
-  this.board[12][12] = new Piece('2x', 'times-two');;
+  this.board[1][12] = new Piece('2x', 'times-two');
+  this.board[2][2] = new Piece('2x', 'times-two');
+  this.board[2][11] = new Piece('2x', 'times-two');
+  this.board[3][3] = new Piece('2x', 'times-two');
+  this.board[3][10] = new Piece('2x', 'times-two');
+  this.board[4][4] = new Piece('2x', 'times-two');
+  this.board[4][9] = new Piece('2x', 'times-two');
+  this.board[9][4] = new Piece('2x', 'times-two');
+  this.board[9][9] = new Piece('2x', 'times-two');
+  this.board[10][3] = new Piece('2x', 'times-two');
+  this.board[10][10] = new Piece('2x', 'times-two');
+  this.board[11][2] = new Piece('2x', 'times-two');
+  this.board[11][11] = new Piece('2x', 'times-two');
+  this.board[12][1] = new Piece('2x', 'times-two');
+  this.board[12][12] = new Piece('2x', 'times-two');
   this.board[1][4] = new Piece('&divide', 'operation');
   this.board[1][9] = new Piece('&divide', 'operation');
   this.board[4][1] = new Piece('&divide', 'operation');
@@ -84,13 +84,13 @@ var Game = function() {
 
   //Counter used to determine the end of the game
   this.passCount = 0;
-}
+};
 
 //Constructor for things that occupy squares
 var Piece = function(content, displayType) {
   this.content = content;
   this.displayType = displayType;
-}
+};
 
 //Render the game board in the DOM
 Game.prototype.renderBoard = function() {
@@ -105,7 +105,7 @@ Game.prototype.renderBoard = function() {
       }
     }
   }
-}
+};
 
 //Render the list of players to the DOM
 Game.prototype.renderPlayers = function() {
@@ -120,7 +120,7 @@ Game.prototype.renderPlayers = function() {
       list.append('<tr><td>' + current.name + '</td><td>' + current.score + '</tr>');
     }
   }
-}
+};
 
 //Returns the number of directions for which the move provides a solution
 //Max would be all 4 directions
@@ -218,7 +218,7 @@ var evaluatePlacement = function(rackSelection, boardSelection) {
       }
       return numSolutions;
   }
-}
+};
 
 //Make the move based on which tiles/squares are selected
 Game.prototype.commitMove = function() {
@@ -232,7 +232,7 @@ Game.prototype.commitMove = function() {
   if (validMove === 0) {
     swal('Illegal move!');
     return false;
-  };
+  }
   passed = false;
 
   //Make the move in the board array, then re-render the board to reflect the move
@@ -262,7 +262,7 @@ Game.prototype.determineScore = function(tileValue, squareValue, numSolutions) {
     score *= 3;
   }
   return score;
-}
+};
 
 //Switch the turn to the next player
 Game.prototype.nextTurn = function() {
@@ -289,12 +289,12 @@ Game.prototype.nextTurn = function() {
   this.players[this.activePlayerIndex].draw(this.pool);
   this.players[this.activePlayerIndex].renderScore();
   this.renderPlayers();
-}
+};
 
 //Add a player to the game
 Game.prototype.addPlayer = function(player) {
   this.players.push(player);
-}
+};
 
 //Get an array of possible moves for a player
 //Empty array = no moves = turn over
@@ -307,12 +307,12 @@ Game.prototype.getPossibleMoves = function(player) {
       var space = $('.square[row="' + coord[0] + '"][col="' + coord[1] + '"]');
       if(evaluatePlacement(tile, space)) {
         possibleMoves.push(coord);
-      };
+      }
     });
   });
   console.log(possibleMoves);
   return possibleMoves;
-}
+};
 
 //Determine if a player's turn should be over
 //e.g. no tiles left or no legal moves
@@ -322,7 +322,7 @@ Game.prototype.determineEndOfTurn = function(player) {
   } else {
     return false;
   }
-}
+};
 
 //Determine if the game should be over because there are no more legal moves
 Game.prototype.determineEndOfGame = function() {
@@ -334,7 +334,7 @@ Game.prototype.determineEndOfGame = function() {
     });
     return true;
   }
-}
+};
 
 //End the game and display the winner
 Game.prototype.end = function() {
@@ -354,11 +354,11 @@ Game.prototype.end = function() {
   if(winners.length > 1) {
     swal('Game Over!', 'It was a tie at ' + topScore + ' points.');
   } else {
-    swal('Game Over!', winners[0].name + ' won with ' + topScore + ' points.')
+    swal('Game Over!', winners[0].name + ' won with ' + topScore + ' points.');
   }
   $('#buttons').hide();
   $('#reset').show();
-}
+};
 
 //Global variables
 var passed = false;

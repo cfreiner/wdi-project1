@@ -11,7 +11,7 @@ var TilePool = function() {
   }
   this.tiles.push(0, 21, 24, 25, 27, 28, 30, 32, 35, 36,
     40, 42, 45, 48, 49, 50, 54, 56, 60, 63, 64, 70, 72, 80, 81, 90);
-}
+};
 
 //Shuffle the tiles using the Fisher-Yates method
 //JavaScript implementation from user CoolAJ86 on Stack Overflow
@@ -27,10 +27,10 @@ TilePool.prototype.shuffle = function() {
     this.tiles[current] = this.tiles[rand];
     this.tiles[rand] = temp;
   }
-}
+};
 
 //Return a tile from the end of the array
 TilePool.prototype.giveTile = function() {
   this.shuffle();
   return this.tiles.pop();
-}
+};

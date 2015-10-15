@@ -8,8 +8,8 @@ var selection = function(parentElement) {
       selected.toggleClass('selected');
     }
     $(e.target).toggleClass('selected');
-  }
-}
+  };
+};
 
 //Selection listeners
 $('#board').on('click', 'div', selection('#board'));
